@@ -1,6 +1,6 @@
 import { useRoutes } from "react-router-dom";
 import "./App.css";
-import AdminLayout from "./layouts/adminLayout";
+import AdminLayout from "./layouts/AdminLayout";
 import Homepage from "./pages/foodsList";
 import FoodsAdd from "./pages/foodsAdd";
 import FoodsEdit from "./pages/foodsEdit";
@@ -11,40 +11,10 @@ const routeConfigs = [
     path: "/admin",
     element: <AdminLayout />,
     children: [
-      {
-        path: "food-list", // URL: /admin/food-list
-        element: <Homepage />,
-      },
-    ],
-  },
-  {
-    path: "/admin",
-    element: <AdminLayout />,
-    children: [
-      {
-        path: "food-add", // URL: /admin/food-list
-        element: <FoodsAdd />,
-      },
-    ],
-  },
-  {
-    path: "/admin",
-    element: <AdminLayout />,
-    children: [
-      {
-        path: "food-edit/:id", // URL: /admin/food-list
-        element: <FoodsEdit />,
-      },
-    ],
-  },
-  {
-    path: "/admin",
-    element: <AdminLayout />,
-    children: [
-      {
-        path: "food-detail/:id", // URL: /admin/food-list
-        element: <FoodDetail />,
-      },
+      { path: "food-list", element: <Homepage /> },
+      { path: "food-add", element: <FoodsAdd /> },
+      { path: "food-edit/:id", element: <FoodsEdit /> },
+      { path: "food-detail/:id", element: <FoodDetail /> },
     ],
   },
 ];
