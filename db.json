@@ -1,4 +1,12 @@
 {
+  "movies": [
+    {
+      "name": "Qủy Cấu",
+      "image": "đghfjgk",
+      "director": "Trần Thị C",
+      "id": 1
+    }
+  ],
   "foods": [
     {
       "name": "Bánh Tráng",
@@ -15,5 +23,11 @@
       "id": 2
     }
   ],
-  "users": []
+  "users": [
+    {
+      "email": "tunvph49703@gmail.com",
+      "password": "$2a$10$9VLJJCn0sxLh8N1wVHrQguOdr1xu2YicBifX.A15BgB0oI9EsscO6",
+      "id": 1
+    }
+  ]
 }

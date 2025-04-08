@@ -39,7 +39,7 @@ function Homepage() {
     if(error) return <p>Có lỗi</p>;
     return (
         <Container>
-          <h1 className="my-4 text-center">Danh sách sản phẩm</h1>
+          <h1 className="my-4 text-center">Danh Sách Sản Phẩm</h1>
           <Button variant="success" href="food-add" className="mb-3">
             Add Food
           </Button>

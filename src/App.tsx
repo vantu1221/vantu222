@@ -5,6 +5,12 @@ import Homepage from "./pages/foodsList";
 import FoodsAdd from "./pages/foodsAdd";
 import FoodsEdit from "./pages/foodsEdit";
 import FoodDetail from "./pages/detailFoods";
+import HomepageMovies from "./pages/Movies/MoviesList";
+import MoviesAdd from "./pages/Movies/MoviesAdd";
+import MoviesEdit from './pages/Movies/MoviesEdit';
+import MoviesDetail from "./pages/Movies/MoviesDetail";
+import Login from "./pages/users/login";
+import Register from "./pages/users/register";
 
 const routeConfigs = [
   {
@@ -15,8 +21,14 @@ const routeConfigs = [
       { path: "food-add", element: <FoodsAdd /> },
       { path: "food-edit/:id", element: <FoodsEdit /> },
       { path: "food-detail/:id", element: <FoodDetail /> },
+      { path: "movies-list", element: <HomepageMovies /> },
+      { path: "movies-add", element: <MoviesAdd /> },
+      { path: "movies-edit/:id", element: <MoviesEdit /> },
+      { path: "movies-detail/:id", element: <MoviesDetail /> }
     ],
   },
+  { path: "/login", element: <Login /> },
+  { path: "/register", element: <Register /> },
 ];
 
 function App() {

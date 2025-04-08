@@ -1,7 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
 import { useState } from "react";
 import { Container, Navbar, Nav, Button } from "react-bootstrap";
-import { FaTachometerAlt,  FaCog, FaSignOutAlt } from "react-icons/fa";
+import { FaTachometerAlt,  FaCog, FaSignOutAlt,FaFilm, FaUtensils} from "react-icons/fa";
 
 const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -15,7 +15,10 @@ const AdminLayout = () => {
             <FaTachometerAlt /> Dashboard
           </Nav.Link>
           <Nav.Link as={Link} to="/admin/food-list" className="text-white">
-            🍽 Food List
+          <FaUtensils /> Food List
+          </Nav.Link>
+          <Nav.Link as={Link} to="/admin/movies-list" className="text-white">
+          <FaFilm /> Movies
           </Nav.Link>
           <Nav.Link as={Link} to="/admin/settings" className="text-white">
             <FaCog /> Settings
