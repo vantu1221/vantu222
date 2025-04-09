@@ -9,17 +9,29 @@ type MoviesInput = {
   name: string;
   image: string;
   director: string;
+  categoryId: number; // ✅ Sửa thành categoryId
 };
 
-// 🛠 API lấy chi tiết món ăn
+type Category = {
+  id: number;
+  name: string;
+};
+
+// API lấy chi tiết phim
 const getMoviesDetail = async (id: string): Promise<MoviesInput> => {
   const { data } = await axios.get(`http://localhost:3000/movies/${id}`);
   return data;
 };
 
-// 🛠 API cập nhật món ăn
-const updateMovies = async ({ id, ...food }: MoviesInput & { id: string }) => {
-  return await axios.put(`http://localhost:3000/movies/${id}`, food);
+// API cập nhật phim
+const updateMovies = async ({ id, ...movie }: MoviesInput & { id: string }) => {
+  return await axios.put(`http://localhost:3000/movies/${id}`, movie);
+};
+
+// API lấy danh sách thể loại
+const fetchCategories = async () => {
+  const { data } = await axios.get<Category[]>("http://localhost:3000/categories");
+  return data;
 };
 
 function MoviesEdit() {
@@ -27,7 +39,6 @@ function MoviesEdit() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  // ✅ Sử dụng useForm từ react-hook-form
   const {
     register,
     handleSubmit,
@@ -35,61 +46,91 @@ function MoviesEdit() {
     formState: { errors },
   } = useForm<MoviesInput>();
 
-  // ✅ Lấy dữ liệu thực phẩm từ API
+  // Lấy dữ liệu phim
   const { data: movie, isLoading, isError } = useQuery({
     queryKey: ["movie", id],
     queryFn: () => getMoviesDetail(id as string),
     enabled: !!id,
   });
+
+  // Lấy dữ liệu categories
+  const { data: categories, isLoading: isCategoriesLoading } = useQuery({
+    queryKey: ["categories"],
+    queryFn: fetchCategories,
+  });
+
   useEffect(() => {
     if (movie) reset(movie);
   }, [movie, reset]);
-  // ✅ Mutation để cập nhật món ăn
+
   const mutation = useMutation({
     mutationFn: (data: MoviesInput) => updateMovies({ id: id as string, ...data }),
     onSuccess: () => {
-      alert("Cập nhật thành công!");
-      queryClient.invalidateQueries({ queryKey: ["movies"] }); // Refresh danh sách
+      alert("🎉 Cập nhật phim thành công!");
+      queryClient.invalidateQueries({ queryKey: ["movies"] });
       navigate("/admin/movies-list");
     },
   });
 
-  // 🛠 Xử lý submit form
   const onSubmitEdit: SubmitHandler<MoviesInput> = (data) => {
+    data.categoryId = Number(data.categoryId); // ép chắc chắn
     mutation.mutate(data);
   };
 
-  // ✅ Kiểm tra trạng thái tải dữ liệu
-  if (isLoading) return <p>⏳ Đang tải dữ liệu...</p>;
-  if (isError) return <p>❌ Không thể tải dữ liệu. Vui lòng thử lại!</p>;
+  if (isLoading) return <p>⏳ Đang tải dữ liệu phim...</p>;
+  if (isError) return <p>❌ Không thể tải dữ liệu phim. Vui lòng thử lại!</p>;
 
   return (
     <Container>
-      <h1 className="my-4 text-center">Chỉnh sửa món ăn</h1>
+      <h1 className="my-4 text-center">Chỉnh sửa phim</h1>
       <Form onSubmit={handleSubmit(onSubmitEdit)}>
         <Form.Group className="mb-3">
-          <Form.Label>Tên</Form.Label>
-          <Form.Control type="text" {...register("name", { required: "Tên là bắt buộc" })} />
+          <Form.Label>Tên phim</Form.Label>
+          <Form.Control
+            type="text"
+            {...register("name", { required: "Tên phim là bắt buộc" })}
+          />
           {errors.name && <Alert variant="danger">{errors.name.message}</Alert>}
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Hình ảnh</Form.Label>
-          <Form.Control type="text" {...register("image", { required: "Link hình ảnh là bắt buộc" })} />
+          <Form.Label>Link hình ảnh</Form.Label>
+          <Form.Control
+            type="text"
+            {...register("image", { required: "Link hình ảnh là bắt buộc" })}
+          />
           {errors.image && <Alert variant="danger">{errors.image.message}</Alert>}
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Tác giả</Form.Label>
-          <Form.Control type="text" {...register("director", { required: "Giá món ăn là bắt buộc" })} />
+          <Form.Label>Đạo diễn</Form.Label>
+          <Form.Control
+            type="text"
+            {...register("director", { required: "Đạo diễn là bắt buộc" })}
+          />
           {errors.director && <Alert variant="danger">{errors.director.message}</Alert>}
         </Form.Group>
 
+        <Form.Group className="mb-3">
+          <Form.Label>Thể loại</Form.Label>
+          {isCategoriesLoading ? (
+            <div>Đang tải thể loại...</div>
+          ) : (
+            <Form.Select {...register("categoryId", { required: "Thể loại là bắt buộc" })}>
+              <option value="">-- Chọn thể loại --</option>
+              {categories?.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
+            </Form.Select>
+          )}
+          {errors.categoryId && <Alert variant="danger">{errors.categoryId.message}</Alert>}
+        </Form.Group>
 
         <Button type="submit" variant="primary" disabled={mutation.isPending}>
-             {mutation.isPending ? "Đang cập nhật..." : "Cập nhật"}
+          {mutation.isPending ? "⏳ Đang cập nhật..." : "✅ Cập nhật phim"}
         </Button>
-
       </Form>
     </Container>
   );

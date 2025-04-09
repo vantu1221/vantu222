@@ -3,15 +3,26 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Table, Button, Container } from "react-bootstrap";
 
-type movies = {
+type Movies = {
   id: number;
   name: string;
   image: string;
   director: string;
+  categoryId: number;
 };
 
-const getMovies = async (): Promise<movies[]> => {
+type Category = {
+  id: number;
+  name: string;
+};
+
+const getMovies = async (): Promise<Movies[]> => {
   const { data } = await axios.get('http://localhost:3000/movies');
+  return data;
+};
+
+const getCategories = async (): Promise<Category[]> => {
+  const { data } = await axios.get('http://localhost:3000/categories');
   return data;
 };
 
@@ -24,6 +35,11 @@ function HomepageMovies() {
     queryFn: getMovies,
   });
 
+  const { data: categories, isLoading: isLoadingCategories } = useQuery({
+    queryKey: ['categories'],
+    queryFn: getCategories,
+  });
+
   const deleteMovies = useMutation({
     mutationFn: async (id: number) => {
       await axios.delete(`http://localhost:3000/movies/${id}`);
@@ -34,8 +50,8 @@ function HomepageMovies() {
     },
   });
 
-  if (isLoading) return <p>Đang tải...</p>;
-  if (error) return <p>Có lỗi</p>;
+  if (isLoading || isLoadingCategories) return <p>Đang tải...</p>;
+  if (error) return <p>Có lỗi xảy ra!</p>;
 
   return (
     <Container>
@@ -50,6 +66,7 @@ function HomepageMovies() {
             <th>Name</th>
             <th>Image</th>
             <th>Director</th>
+            <th>Category</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -67,6 +84,9 @@ function HomepageMovies() {
                 />
               </td>
               <td>{p.director}</td>
+              <td>
+                {categories?.find((c) => c.id === p.categoryId)?.name || "Không xác định"}
+              </td>
               <td>
                 <Button
                   variant="info"

@@ -1,10 +1,17 @@
 {
+  "categories": [
+    { "id": 1, "name": "Hành động" },
+    { "id": 2, "name": "Tình cảm" },
+    { "id": 3, "name": "Kinh dị" },
+    { "id": 4, "name": "Hài hước" }
+  ],
   "movies": [
     {
       "name": "Qủy Cấu",
       "image": "đghfjgk",
       "director": "Trần Thị C",
-      "id": 1
+      "id": 1,
+      "categoryId":3
     }
   ],
   "foods": [

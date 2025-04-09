@@ -3,5 +3,7 @@ export type Movies={
     name:string,
     image:string,
     director:string,
-    category:boolean,
+    categoryId: number,
 }
+
+  
