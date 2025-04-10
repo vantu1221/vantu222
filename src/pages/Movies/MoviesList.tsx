@@ -62,60 +62,61 @@ function HomepageMovies() {
       <Table striped bordered hover responsive>
         <thead className="table-dark">
           <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Image</th>
-            <th>Director</th>
-            <th>Category</th>
-            <th>Action</th>
+            <th style={{ textAlign: "center", verticalAlign: "middle" }}>ID</th>
+            <th style={{ textAlign: "center", verticalAlign: "middle" }}>Name</th>
+            <th style={{ textAlign: "center", verticalAlign: "middle" }}>Image</th>
+            <th style={{ textAlign: "center", verticalAlign: "middle" }}>Director</th>
+            <th style={{ textAlign: "center", verticalAlign: "middle" }}>Category</th>
+            <th style={{ textAlign: "center", verticalAlign: "middle" }}>Action</th>
           </tr>
         </thead>
         <tbody>
-          {movies?.map((p) => (
-            <tr key={p.id}>
-              <td>{p.id}</td>
-              <td>{p.name}</td>
-              <td>
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  className="img-thumbnail"
-                  style={{ width: "80px", height: "80px" }}
-                />
-              </td>
-              <td>{p.director}</td>
-              <td>
-                {categories?.find((c) => c.id === p.categoryId)?.name || "Không xác định"}
-              </td>
-              <td>
-                <Button
-                  variant="info"
-                  onClick={() => navigate(`/admin/movies-detail/${p.id}`)}
-                  className="me-2"
-                >
-                  Detail
-                </Button>
-                <Button
-                  variant="warning"
-                  onClick={() => navigate(`/admin/movies-edit/${p.id}`)}
-                  className="me-2"
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="danger"
-                  onClick={() => {
-                    if (window.confirm("Bạn muốn xóa không?")) {
-                      deleteMovies.mutate(p.id);
-                    }
-                  }}
-                >
-                  Delete
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+  {movies?.map((p) => (
+    <tr key={p.id}>
+      <td style={{ textAlign: "center", verticalAlign: "middle" }}>{p.id}</td>
+      <td style={{ textAlign: "center", verticalAlign: "middle" }}>{p.name}</td>
+      <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+        <img
+          src={p.image}
+          alt={p.name}
+          className="img-thumbnail"
+          style={{ width: "80px", height: "80px", objectFit: "cover" }}
+        />
+      </td>
+      <td style={{ textAlign: "center", verticalAlign: "middle" }}>{p.director}</td>
+      <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+        {categories?.find((c) => c.id === p.categoryId)?.name || "Không xác định"}
+      </td>
+      <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+        <Button
+          variant="info"
+          onClick={() => navigate(`/admin/movies-detail/${p.id}`)}
+          className="me-2"
+        >
+          Detail
+        </Button>
+        <Button
+          variant="warning"
+          onClick={() => navigate(`/admin/movies-edit/${p.id}`)}
+          className="me-2"
+        >
+          Edit
+        </Button>
+        <Button
+          variant="danger"
+          onClick={() => {
+            if (window.confirm("Bạn muốn xóa không?")) {
+              deleteMovies.mutate(p.id);
+            }
+          }}
+        >
+          Delete
+        </Button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
       </Table>
     </Container>
   );

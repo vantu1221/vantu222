@@ -5,5 +5,3 @@ export type Movies={
     director:string,
     categoryId: number,
 }
-
-  

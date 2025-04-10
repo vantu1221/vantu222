@@ -1,17 +1,36 @@
 {
   "categories": [
-    { "id": 1, "name": "Hành động" },
-    { "id": 2, "name": "Tình cảm" },
-    { "id": 3, "name": "Kinh dị" },
-    { "id": 4, "name": "Hài hước" }
+    {
+      "id": 1,
+      "name": "Hành động"
+    },
+    {
+      "id": 2,
+      "name": "Tình cảm"
+    },
+    {
+      "id": 3,
+      "name": "Kinh dị"
+    },
+    {
+      "id": 4,
+      "name": "Hài hước"
+    }
   ],
   "movies": [
     {
       "name": "Qủy Cấu",
-      "image": "đghfjgk",
+      "image": "https://khenphim.com/wp-content/uploads/2023/12/Quy-Cau-pic1-poster_KP.webp",
       "director": "Trần Thị C",
-      "id": 1,
-      "categoryId":3
+      "categoryId": 3,
+      "id": 1
+    },
+    {
+      "name": "Mai",
+      "image": "https://cinema.momocdn.net/img/51766330826251952-Mai_600x800.png",
+      "director": "Phạm Huyền Trang",
+      "categoryId": 2,
+      "id": 2
     }
   ],
   "foods": [
